@@ -52,10 +52,9 @@ LIMITS = {"generate": 30, "diagnose": 10, "trademark": 10, "domains": 30}
 # 見た目（色や大きさ）。「nm-」で始まる名前は、このアプリの画面用に自分でつけた名前
 st.markdown("""
 <style>
-:root { --nm-main:#0a7f61; --nm-light:#e6f5f0; --nm-accent:#00cc96; --nm-sub:#666666; --nm-star:#c77c02;
+:root { --nm-main:#0a7f61; --nm-light:#e6f5f0; --nm-accent:#00cc96; --nm-star:#e0a100;
         --nm-ok-bg:#e7f6ec; --nm-ok:#1e7b3a; --nm-warn-bg:#fff6dc; --nm-warn:#7a5600; }
 [data-testid="stMainBlockContainer"] { padding-top: 2.5rem; max-width: 760px; }
-div[class*="st-key-box-"] { background: #ffffff; }
 .nm-title { font-size: 2rem; font-weight: 700; margin: 0; }
 .nm-subtitle { color: var(--nm-main); font-weight: 700; margin: 0; }
 .nm-caption { color: var(--nm-sub); font-size: 0.9rem; margin: 6px 0 0; }
@@ -72,11 +71,15 @@ div[class*="st-key-box-"] { background: #ffffff; }
 .st-key-targets [data-testid="stBaseButton-primary"],
 .st-key-targets [data-testid="stBaseButton-primary"]:hover { background: var(--nm-light); color: var(--nm-main);
                                                             border: 2px solid var(--nm-main); font-weight: 700; }
+/* 色の設定ファイル（.streamlit/config.toml）がなくても、メインのボタンを緑にする */
+[data-testid="stBaseButton-primary"] { background: var(--nm-main); border-color: var(--nm-main); color: #ffffff; }
+button[data-variant="pills"][data-selected="true"] { background: var(--nm-light) !important; border-color: var(--nm-main) !important;
+                                                     color: var(--nm-main) !important; }
 /* タブ：スマホでも4つが1行に収まるように */
 [data-testid="stTabs"] [role="tablist"] { gap: 0; }
 [data-testid="stTab"] { flex: 1 1 0; min-width: 0; padding: 4px 2px; justify-content: center; }
 [data-testid="stTab"] p { font-size: 0.78rem; white-space: normal; text-align: center; line-height: 1.35; }
-.nm-dir { display: inline-block; background: #f0f0f0; border-radius: 6px; padding: 2px 10px; font-size: 0.85rem; }
+.nm-dir { display: inline-block; background: #f0f0f0; color: #333333; border-radius: 6px; padding: 2px 10px; font-size: 0.85rem; }
 .nm-name-line { line-height: 1.3; }
 .nm-name-line .surname { font-size: 1.3rem; color: var(--nm-sub); margin-right: 6px; }
 .nm-name-line .name { font-size: 2rem; font-weight: 700; }
@@ -84,15 +87,16 @@ div[class*="st-key-box-"] { background: #ffffff; }
 .nm-romaji { color: var(--nm-sub); font-size: 0.9rem; }
 .nm-catch { font-weight: 700; margin: 6px 0; }
 .nm-badge { display: inline-block; padding: 2px 10px; border-radius: 6px; font-size: 0.85rem; margin: 2px 6px 2px 0;
-            background: #f0f0f0; }
+            background: #f0f0f0; color: #333333; }
 .nm-badge.ok { background: var(--nm-ok-bg); color: var(--nm-ok); }
 .nm-badge.warn { background: var(--nm-warn-bg); color: var(--nm-warn); }
 .nm-score { display: grid; grid-template-columns: max-content 1fr; gap: 2px 18px; margin-top: 8px; }
 .nm-score .axis { color: var(--nm-sub); }
 .nm-stars { color: var(--nm-star); letter-spacing: 1px; white-space: nowrap; }
-.nm-stars .off { color: #cccccc; }
+.nm-stars .off { color: #bbbbbb; }
 .nm-stars .num { color: var(--nm-sub); font-size: 0.8rem; margin-left: 6px; letter-spacing: 0; }
-.nm-judge { border-radius: 8px; padding: 10px 12px; margin: 4px 0 8px; }
+.nm-judge { border-radius: 8px; padding: 10px 12px; margin: 4px 0 8px; color: #333333; }
+.nm-judge .nm-small { color: #555555; }
 .nm-judge.ok { background: var(--nm-ok-bg); }
 .nm-judge.warn { background: var(--nm-warn-bg); }
 .nm-small { font-size: 0.85rem; color: var(--nm-sub); }
@@ -100,11 +104,23 @@ div[class*="st-key-box-"] { background: #ffffff; }
 .nm-table-wrap { overflow-x: auto; }
 .nm-table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
 .nm-table th, .nm-table td { border: 1px solid #dddddd; padding: 6px 8px; text-align: center; }
-.nm-table th { background: var(--nm-light); white-space: nowrap; }
+.nm-table th { background: var(--nm-light); color: #333333; white-space: nowrap; }
 .nm-table td:first-child { white-space: nowrap; text-align: left; }
 .nm-footer { color: var(--nm-sub); font-size: 0.8rem; }
 </style>
 """, unsafe_allow_html=True)
+
+
+# 明るい表示（ライト）と暗い表示（ダーク）で変える色。暗い表示でカードを白くすると、白い文字が読めなくなるため
+try:
+    DARK = st.context.theme.type == "dark"
+except Exception:
+    DARK = False
+if DARK:
+    st.markdown("<style>:root { --nm-sub: #b0b0b0; }</style>", unsafe_allow_html=True)
+else:
+    st.markdown("<style>:root { --nm-sub: #666666; } div[class*='st-key-box-'] { background: #ffffff; }</style>",
+                unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------

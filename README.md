@@ -50,7 +50,8 @@ logic.py（裏の処理）
    - 「**Add file**」→「**Create new file**」
    - 名前の欄に `.streamlit/config.toml` と入れる
    - 中身に、このフォルダの `.streamlit/config.toml` の中身をそのまま貼って「**Commit changes**」
-   - なくてもアプリは動きますが、ボタンなどの色が Streamlit の標準（赤）になります
+   - なくてもアプリは動きます。ただしその場合、スマホやPCがダークモードだと画面が黒っぽい表示になり、
+     一部の部品（チェックボックスなど）の色が Streamlit の標準（赤）になります
 
 ### 2. Streamlit Community Cloud で公開する
 
