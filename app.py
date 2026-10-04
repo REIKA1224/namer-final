@@ -43,7 +43,7 @@ logic.API_KEY = secret("OPENAI_API_KEY")
 logic.MODEL = secret("OPENAI_MODEL") or "gpt-6-luna"
 PREMIUM_CODE = secret("PREMIUM_CODE")  # 空なら、詳細診断は誰でも使える
 NOTE_URL = "https://note.com/namersai/n/nd1fda095acbc?sub_rt=share_pb"
-SURVEY_URL = "https://docs.google.com/forms/d/e/1FAIpQLScEKP2qdJ49NgbjOrq27T4fDaPIXTqrUO74wdFMxMhtwdylPQ/viewform?usp=header"
+SURVEY_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd_NxM6_s0_3Ho1UQGg1PF1CTUZvzl1_6BfmLSgw2HBy7yTsg/viewform?usp=publish-editor"
 TABS = ["💡  \n名前を考える", "💎  \n詳細診断", "🔍  \n商標・ドメイン", "⭐  \nお気に入り"]  # 絵文字の下に名前
 
 # 同じ人が1時間に使える回数（APIの料金を使いすぎないため）
